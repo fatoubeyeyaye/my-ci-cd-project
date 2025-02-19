@@ -14,11 +14,20 @@ jobs:
         with:
           node-version: '16'
 
+      - name: Debug environment
+        run: |
+          echo "Node.js version:"
+          node -v
+          echo "NPM version:"
+          npm -v
+          echo "Installed packages:"
+          npm list || true
+
       - name: Install dependencies
-        run: npm install
+        run: npm install --include=dev
 
       - name: Run tests
-        run: npm test
+        run: npx jest
 
   deploy:
     needs: build-and-test
@@ -26,4 +35,4 @@ jobs:
     if: github.ref == 'refs/heads/main'
     steps:
       - name: Deploy to test environment
-        run: echo "Deploying to test server..."
+        run: echo "🚀 Deploying to test server..."
